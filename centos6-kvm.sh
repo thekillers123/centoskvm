@@ -98,13 +98,13 @@ service php-fpm restart
 service nginx restart
 
 # install openvpn
-wget -O /etc/openvpn/openvpn.tar "http://script.jualssh.com/autoscript/conf/openvpn-debian.tar"
-cd /etc/openvpn/
-tar xf openvpn.tar
-wget -O /etc/openvpn/1194.conf "http://script.jualssh.com/autoscript/conf/1194-centos.conf"
-if [ "$OS" == "x86_64" ]; then
-  wget -O /etc/openvpn/1194.conf "http://script.jualssh.com/autoscript/conf/1194-centos64.conf"
-fi
+#wget -O /etc/openvpn/openvpn.tar "http://script.jualssh.com/autoscript/conf/openvpn-debian.tar"
+#cd /etc/openvpn/
+#tar xf openvpn.tar
+#wget -O /etc/openvpn/1194.conf "http://script.jualssh.com/autoscript/conf/1194-centos.conf"
+#if [ "$OS" == "x86_64" ]; then
+#  wget -O /etc/openvpn/1194.conf "http://script.jualssh.com/autoscript/conf/1194-centos64.conf"
+#fi
 wget -O /etc/iptables.up.rules "http://script.jualssh.com/autoscript/conf/iptables.up.rules"
 sed -i '$ i\iptables-restore < /etc/iptables.up.rules' /etc/rc.local
 sed -i '$ i\iptables-restore < /etc/iptables.up.rules' /etc/rc.d/rc.local
@@ -119,11 +119,11 @@ cd
 
 # configure openvpn client config
 cd /etc/openvpn/
-wget -O /etc/openvpn/1194-client.ovpn "http://script.jualssh.com/autoscript/conf/1194-client.conf"
+#wget -O /etc/openvpn/1194-client.ovpn "http://script.jualssh.com/autoscript/conf/1194-client.conf"
 sed -i $MYIP2 /etc/openvpn/1194-client.ovpn;
 PASS=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 15 | head -n 1`;
-useradd -M -s /bin/false KangArie
-echo "KangArie:$PASS" | chpasswd
+useradd -M -s /bin/false johnker
+echo "johnker:$PASS" | chpasswd
 echo "username" > pass.txt
 echo "password" >> pass.txt
 tar cf client.tar 1194-client.ovpn pass.txt
@@ -246,8 +246,8 @@ chmod +x limit.sh
 service crond start
 chkconfig crond on
 
-# set time GMT +7
-ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
+# set time GMT +8
+ln -fs /usr/share/zoneinfo/Asia/Singapore /etc/localtime
 
 # finalisasi
 chown -R nginx:nginx /home/vps/public_html
